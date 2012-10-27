@@ -1,8 +1,7 @@
 Why I Chose Erlang
 ===================
 
-Erlang is suited for messaging applications because of the erlang processes are light weight processes which allow work to proceed concurrently. Workers can be spawned quickly and can easy be made to work on multiple nodes. 
-Its easier to build monitoring systems using OTP and gen_server specifications.
+Erlang is suited for messaging applications because erlang processes are light weight processes which allow work to proceed concurrently. Workers can be spawned quickly and can easily be made to work on multiple nodes. Its easier to build monitoring systems using OTP and gen_server specifications.
 
 Also I had built a similar application in Ruby using Rack, Thin(Event Server) and Redis which is available at git@github.com:supersid/IODemon.git. It also included a small module which allowed clients to fetch data using long polling, built with async_rack, however I doubt if it would withstand serious load.
 
