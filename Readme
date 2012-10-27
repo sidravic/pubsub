@@ -1,0 +1,44 @@
+Why I Chose Erlang
+===================
+
+Erlang is suited for messaging applications because of the erlang processes are light weight processes which allow work to proceed concurrently. Workers can be spawned quickly and can easy be made to work on multiple nodes. 
+Its easier to build monitoring systems using OTP and gen_server specifications.
+
+Also I had built a similar application in Ruby using Rack, Thin(Event Server) and Redis which is available at git@github.com:supersid/IODemon.git. It also included a small module which allowed clients to fetch data using long polling, built with async_rack, however I doubt if it would withstand serious load.
+
+The Approach
+==============
+
+Overview
+---------
+The application would allow users to sign in using a CLIENT and subscribe to specific Events. A client could subscribe to independent events like "ruby" or specific events like "ruby.evented_programming.eventmachine". 
+
+A PUBLISHER publishes messages with a message key like "ruby" or "ruby.eventmachine" which is used to route messages to right subscribers based on their subscriptions requests.
+
+The MESSAGE BROKER performs the main routing work to route messages to the appropriate worker.
+
+DataStructure 
+-------------
+
+The entire system contains two data structures 
+1) An erlang dictionary (Dict) which is a key value store
+2) An Mnesia table (in memory with disc copy on a single node).
+
+The Dict is used to keep track of a Client Process using the Nickname/Username as a key.
+The Mnesia table keeps track of the number of processes subscribed to a given event.
+
+
+Flow
+------
+
+When a publisher publishes a message with the following key "ruby.evented.thin" the message_broker queries the event_store for the which fetches users who have subscribed to all three and the message is sent to them.
+
+
+Not Part of the Code
+=======================
+
+I haven't built the unsubscribing to events and siging off the client.
+
+
+
+

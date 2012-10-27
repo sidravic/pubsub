@@ -1,0 +1,33 @@
+1> c(message_broker).
+{ok,message_broker}
+2> c(client).
+{ok,client}
+3> c(event_store).
+{ok,event_store}
+4> client:start().
+** exception error: undefined function client:start/0
+5> client:start(sid).
+Data arrived sid<0.58.0><0.56.0>
+Data arrived Nick Not present sid<0.58.0><0.56.0>
+{ok,signed_in}
+6> client:subscribe(sid, [ruby, programming, java]).
+Received with ruby<0.58.0>
+{ok,subscribed}
+No Event foundTransaction Status and data atomic okReceived with programming<0.58.0>
+No Event foundTransaction Status and data atomic okReceived with java<0.58.0>
+No Event foundTransaction Status and data atomic ok7> event_store:subscribers([ruby, programming, java], []).
+[<0.58.0>]
+8> event_store:subscribers([ruby, programming], []).      
+[<0.58.0>]
+9> event_store:subscribers([ruby, programming, python], []).
+[]
+10> message_broker:receive_published_msg("Hello", [ruby, programming, java]).
+{ok,published}
+Feed Message: "Hello"11> message_broker:receive_published_msg("Hello", [ruby]).                   
+{ok,published}
+Feed Message: "Hello"12> message_broker:receive_published_msg("Hello", [ruby, java]).
+{ok,published}
+Feed Message: "Hello"13> message_broker:receive_published_msg("Hello", [ruby, python]).
+{ok,published}
+14> q().
+ok
